@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student, Instructor, Course, StudentCourse
+from .models import Student
 from .const_data import view_information
-
+from .models import Instructor
+from .models import Course
+from .models import StudentCourse
 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
@@ -103,6 +105,14 @@ SELECT `school_db_student`.`id`,
 # Order by hire date ascending
 # Print out the instructor's full name and hire date to the terminal
 def problem_two(request):
+  
+    instructors = Instructor.objects.filter(hire_date__year__lt=2010)
+
+    for instructor in instructors:
+
+      print(f'First name: {Instructor.first_name} Last name: {Instructor.last_name} Hire Date: {Instructor.hire_date}')
+
+     
 
     return complete(request)
 
@@ -145,8 +155,14 @@ SELECT `school_db_instructor`.`id`,
 # (Do not hard code his name in the print)
 def problem_three(request):
 
-    return complete(request)
+  courses = Course.objects.filter(pk=2).get()
 
+  for course in courses:
+
+    print()
+
+  return complete(request)
+  
 
 # Supporting Query Method Documentation:
 """
