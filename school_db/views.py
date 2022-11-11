@@ -215,6 +215,15 @@ SELECT `school_db_instructor`.`id`,
 # Get the count of students, courses, and instructors and print them in the terminal
 def problem_four(request):
 
+    students = Student.objects.count()
+    print(students)
+
+    Courses = Course.objects.count()
+    print(Courses)
+
+    instructors = Instructor.objects.count()
+    print(instructors)
+
     return complete(request)
 
 
@@ -259,6 +268,11 @@ SELECT COUNT(*) AS `__count`
 # NOTE every time you execute this function a duplicate student will be created with a different primary key number
 def problem_five(request):
 
+    Student.objects.create(first_name='Kyle', last_name='Springsteen', year='2022', gpa='3.0')
+
+    # s = Student(first_name='Kyle', last_name='Springsteen', year='2022', gpa='3.0')
+    # s.save(force_insert=True)
+
     return complete(request)
 
 
@@ -286,13 +300,22 @@ VALUES ('Kyle', 'Harwood', 2022, 3.0)
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 
-# Query the previoiusly created student by the id and update the "gpa" to a new value
-# Then query the studets table to get that student by their id
+# Query the previously created student by the id and update the "gpa" to a new value
+# Then query the students table to get that student by their id
 # Print the new student's id, full name, and gpa to the terminal
 def problem_six(request):
 
+    Student.objects.filter(id=11).update(gpa=3.5)
+
+    s = Student.objects.get(id=11)
+
+    print(f'First Name: {s.first_name} Last Name: {s.last_name} gpa: {s.gpa} ')
+
     # Make sure to set this equal to the primary key of the row you just created!
-    student_id = 11
+    student_id = Student.objects.get(pk=11)
+    print(f'Student id: {student_id}')
+    
+    
 
     return complete(request)
 
@@ -337,6 +360,8 @@ LIMIT 21
 # Delete the student that you have created and updated
 # Check your MySQL Workbench to confirm the student is no longer in the table!
 def problem_seven(request):
+
+    Student.objects.filter(pk=11).delete()
 
     # Make sure to set this equal to the primary key of the row you just created!
     student_id = 11
